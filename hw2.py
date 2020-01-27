@@ -1,7 +1,10 @@
 from math import *
 import numpy as np
+from operator import add
+from termcolor import colored, cprint
 
 k_constant = 9E9
+epsilon = 8.85e-12
 
 # 13.47
 
@@ -37,4 +40,41 @@ def net_force(q, E_net):
 
 # 15.28
 
+
+def electric_field_piece_1(length, net_charge, location_vec):
+    # a
+    x_component = ((9e9)*(length/3)*(net_charge*(10**-9))) / \
+        (3*((((length/3)**2)+(location_vec[1]**2))**(3/2.)))
+    y_component = ((9e9)*(location_vec[1])*(net_charge*(10**-9))) / \
+        (3*((((length/3)**2)+(location_vec[1]**2))**(3/2.)))
+    return [x_component, y_component]
+
+
+def electric_field_piece_2(length, net_charge, location_vec):
+    # b
+    return ((9e9)*(net_charge*(10**-9)))/(3*(location_vec[1]**2))
+
+
+def electric_field_piece_3(length, net_charge, location_vec):
+    # c
+    x_component = (-(9e9)*(length/3)*(net_charge*(10**-9))) / \
+        (3*((((length/3)**2)+(location_vec[1]**2))**(3/2.)))
+    y_component = ((9e9)*(location_vec[1])*(net_charge*(10**-9))) / \
+        (3*((((length/3)**2)+(location_vec[1]**2))**(3/2.)))
+    return [x_component, y_component]
+
+
+def net_electric_field_at_A(E1, E2, E3):
+    # d
+    return [sum(x) for x in zip(E1, E2, E3)]
+
 # 15.26
+
+
+def initial_acceleration_coal_dust(times, L, Q, d, alpha, m):
+    # a & b
+    a_d = (((Q**2)*alpha)/((4)*(pi**2)*(epsilon**2)*(L**2)*(m)*((times*d*.01)**3)))
+    a = (((Q**2)*alpha)/((4)*(pi**2)*(epsilon**2)*(L**2)*(m)*((d*.01)**3)))
+    print("Initial acceleration = {}".format(colored(str(a), 'red')))
+    cprint("If the speck of coal dust were initially {} times as far from the charged wire, the initial acceleration of the speck would be {} times smaller".format(
+        colored(str(times), 'red'), colored(str(a_d/a), 'red')))
