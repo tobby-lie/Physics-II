@@ -30,13 +30,53 @@ def net_electric_field(electric_fields):
 
 
 def net_force(q, E_net):
-    q = q*(1E-6)
+    q = q*(1E-9)
     E_net = np.array(E_net)
     return q*E_net
 
 # 13.49
 
+
+def electric_field_by_ion(q, distance):
+    # beginning of all parts
+    return k_constant*(q/(((distance*(10**-9))**2)))
+
+
+def net_field(section, q1, q2, r, total_distance):
+    if (section == 'a'):
+        E1 = electric_field_by_ion(q1, (total_distance-r))
+        E2 = electric_field_by_ion(q2, r)
+        return E1 + E2
+    elif (section == 'b'):
+        E1 = electric_field_by_ion(q1, (total_distance+r))
+        E2 = electric_field_by_ion(q2, r)
+        return E1 - E2
+
+
+def force_electron(q, E):
+    return q*E
+
 # 15.22
+
+
+def length_piece(total_length, pieces):
+    # a
+    return total_length/pieces
+
+# b just do by hand
+
+
+def charge_piece(total_charge, pieces):
+    # c
+    return total_charge/pieces
+
+
+def electric_field_piece(x, y, total_charge, pieces):
+    r = sqrt((x**2)+(y**2))
+    q = charge_piece(total_charge, pieces)
+    r_vec = np.array([x, y, 0])
+    r_hat = r_vec/r
+    return ((9e9)*(q/(r**2)))*r_hat
 
 # 15.28
 
