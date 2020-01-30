@@ -71,12 +71,16 @@ def charge_piece(total_charge, pieces):
     return total_charge/pieces
 
 
-def electric_field_piece(x, y, total_charge, pieces):
-    r = sqrt((x**2)+(y**2))
-    q = charge_piece(total_charge, pieces)
+def electric_field_piece(x, y, charge, pieces):
+    r = sqrt(((x)**2)+((y)**2))
+    print(r)
+    print(x)
+    print(y)
+    q = charge
     r_vec = np.array([x, y, 0])
     r_hat = r_vec/r
-    return ((9e9)*(q/(r**2)))*r_hat
+    print(r_hat)
+    return ((k_constant)*(q/((r)**2)))*r_hat
 
 # 15.28
 
